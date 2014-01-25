@@ -45,7 +45,7 @@ namespace mithep
       fMatchHePlusPos(ThreeVector(0.,0.,0.)),fMatchHePlusEn(-1.),fMatchHePlusTime(-1000.),
       fMatchHeMinusPos(ThreeVector(0.,0.,0.)),fMatchHeMinusEn(-1.),fMatchHeMinusTime(-1000.),
       fMatchHePlusPosDR15(ThreeVector(0.,0.,0.)),fMatchHePlusEnDR15(-1.),fMatchHePlusTimeDR15(-1000.),
-      fMatchHeMinusPosDR15(ThreeVector(0.,0.,0.)),fMatchHeMinusEnDR15(-1.),fMatchHeMinusTimeDR15(-1000.), fEnergyErrSmearing(0.), fEnergyScale(1.) {}
+      fMatchHeMinusPosDR15(ThreeVector(0.,0.,0.)),fMatchHeMinusEnDR15(-1.),fMatchHeMinusTimeDR15(-1000.), fEnergyErrSmearing(0.), fEnergyScale(1.), fEnergyPreSmearScale(0.) {}
     Photon(Double_t px, Double_t py, Double_t pz, Double_t e) :
       fMom(FourVector(px,py,pz,e)),
       fR9(0),fHadOverEm(0),fHcalDepth1OverEcal(0),
@@ -68,7 +68,7 @@ namespace mithep
       fMatchHePlusPos(ThreeVector(0.,0.,0.)),fMatchHePlusEn(-1.),fMatchHePlusTime(-1000.),
       fMatchHeMinusPos(ThreeVector(0.,0.,0.)),fMatchHeMinusEn(-1.),fMatchHeMinusTime(-1000.),
       fMatchHePlusPosDR15(ThreeVector(0.,0.,0.)),fMatchHePlusEnDR15(-1.),fMatchHePlusTimeDR15(-1000.),
-      fMatchHeMinusPosDR15(ThreeVector(0.,0.,0.)),fMatchHeMinusEnDR15(-1.),fMatchHeMinusTimeDR15(-1000.), fEnergyErrSmearing(0.), fEnergyScale(1.) {}
+      fMatchHeMinusPosDR15(ThreeVector(0.,0.,0.)),fMatchHeMinusEnDR15(-1.),fMatchHeMinusTimeDR15(-1000.), fEnergyErrSmearing(0.), fEnergyScale(1.), fEnergyPreSmearScale(0.) {}
 
     // Contents of the Photons
     const Conversion    *ConvCand(UInt_t i)         const { return fConversions.At(i);  }
@@ -84,6 +84,7 @@ namespace mithep
     Double_t             EnergyErrRegr()            const { return fEnergyErrRegr;      }
     Double_t             EnergyPhoFix()             const { return fEnergyPhoFix;       }
     Double_t             EnergyErrPhoFix()          const { return fEnergyErrPhoFix;    }
+    Double_t             EnergyPreSmearScale()      const { return fEnergyPreSmearScale; }
     Double_t             EnergyScale()              const { return fEnergyScale;        }
     Double_t             HadOverEm()                const { return fHadOverEm;          }
     Double_t             HcalDepth1OverEcal()       const { return fHcalDepth1OverEcal; }
@@ -182,6 +183,7 @@ namespace mithep
     void                 SetEnergyErrRegr(Double_t x)            { fEnergyErrRegr           = x; }
     void                 SetEnergyPhoFix(Double_t x)             { fEnergyPhoFix            = x; }
     void                 SetEnergyErrPhoFix(Double_t x)          { fEnergyErrPhoFix         = x; }
+    void                 SetEnergyPreSmearScale(Double_t x)      { fEnergyPreSmearScale     = x; }
     void                 SetEnergyScale(Double_t x)              { fEnergyScale             = x; }
     void                 SetIsConverted(Bool_t b)                { fIsConverted             = b; }
     void                 SetMom(Double_t px, Double_t py, Double_t pz, Double_t e);
@@ -357,10 +359,12 @@ namespace mithep
     Double32_t           fMatchHeMinusTimeDR15;  // phi matched HBHE- time - 15 cm DR match window
     Double32_t           fEnergyErrSmearing;  //[0,0,14]addit. ene smearing applied to energy error wrt MC
     Double32_t           fEnergyScale;  //[0,0,14]Energy scale applied to photon
+    Double32_t           fEnergyPreSmearScale; //[0,0,14]pre-smeared/scaled value of the photon energy
+
     
 
 
-    ClassDef(Photon,20) // Photon class
+    ClassDef(Photon,21) // Photon class
   };
 }
 
